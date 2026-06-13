@@ -1,4 +1,4 @@
-import { normalizeExpression, calculateExpression } from "../assets/js/calculator.js";
+import { normalizeExpression, calculateExpression } from "../calculator/assets/js/calculator.js";
 
 describe("normalizeExpression", () => {
   it("leaves plain arithmetic unchanged", () => {
