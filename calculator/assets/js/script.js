@@ -109,6 +109,11 @@ function percentToResult() {
   updateResult();
 }
 
+function trigToResult(func) {
+  currentExpression += func;
+  updateResult();
+}
+
 function calculateExpression(expression) {
   return calcExpr(expression, LAST_RESULT);
 }
@@ -138,5 +143,6 @@ window.backspace = backspace;
 window.operatorToResult = operatorToResult;
 window.clearResult = clearResult;
 window.percentToResult = percentToResult;
+window.trigToResult = trigToResult;
 window.calculateExpression = calculateExpression;
 window.calculateResult = calculateResult;

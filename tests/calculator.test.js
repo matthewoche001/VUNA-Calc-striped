@@ -133,7 +133,27 @@ describe("calculateExpression", () => {
     expect(calculateExpression("")).toBe("Error");
   });
 
-  it("returns Error for trig functions (sinDeg is undefined)", () => {
-    expect(calculateExpression("sin(30)")).toBe("Error");
+  it("calculates sin(30) correctly", () => {
+    expect(calculateExpression("sin(30)")).toBeCloseTo(0.5);
+  });
+
+  it("calculates cos(60) correctly", () => {
+    expect(calculateExpression("cos(60)")).toBeCloseTo(0.5);
+  });
+
+  it("calculates tan(45) correctly", () => {
+    expect(calculateExpression("tan(45)")).toBeCloseTo(1);
+  });
+
+  it("calculates asin(0.5) correctly", () => {
+    expect(calculateExpression("asin(0.5)")).toBeCloseTo(30);
+  });
+
+  it("calculates acos(0.5) correctly", () => {
+    expect(calculateExpression("acos(0.5)")).toBeCloseTo(60);
+  });
+
+  it("calculates atan(1) correctly", () => {
+    expect(calculateExpression("atan(1)")).toBeCloseTo(45);
   });
 });

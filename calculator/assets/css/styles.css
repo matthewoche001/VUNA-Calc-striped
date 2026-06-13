@@ -223,6 +223,25 @@
       background: #d1f0dd;
     }
 
+    .trig-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn-function {
+      background: #f3f0ff;
+      color: #7048e8;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 4px;
+    }
+
+    .btn-function:hover {
+      background: #e5dbff;
+    }
+
     .group-header {
       color: #495057;
       font-weight: 700;

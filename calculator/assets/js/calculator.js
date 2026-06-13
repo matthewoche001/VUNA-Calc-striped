@@ -1,3 +1,12 @@
+const TRIG_DEFS = `
+function sinDeg(d){return Math.sin(d*Math.PI/180)}
+function cosDeg(d){return Math.cos(d*Math.PI/180)}
+function tanDeg(d){return Math.tan(d*Math.PI/180)}
+function asinDeg(x){return Math.asin(x)*180/Math.PI}
+function acosDeg(x){return Math.acos(x)*180/Math.PI}
+function atanDeg(x){return Math.atan(x)*180/Math.PI}
+`;
+
 function normalizeExpression(expr) {
   return expr
     .replace(/asin\(/g, "asinDeg(")
@@ -21,7 +30,7 @@ function calculateExpression(expression, lastResult = 0) {
       lastResult,
     );
 
-    let result = eval(normalizedExpression);
+    let result = eval(TRIG_DEFS + normalizedExpression);
 
     if (isNaN(result) || !isFinite(result)) {
       throw new Error();
