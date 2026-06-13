@@ -1,88 +1,766 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculator</title>
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoiseLog — Document the Noise. Win the Dispute.</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      background: #fff;
+      border-bottom: 1px solid #e5e5e5;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .nav-brand .purple {
+      color: #534AB7;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-login {
+      font-size: 0.95rem;
+      color: #534AB7;
+      font-weight: 500;
+    }
+
+    .nav-login:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: #534AB7;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #4338a0;
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: #534AB7;
+      border: 2px solid #534AB7;
+    }
+
+    .btn-outline:hover {
+      background: #EEEDFE;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #534AB7;
+    }
+
+    .btn-ghost:hover {
+      background: #EEEDFE;
+    }
+
+    .btn-sm {
+      padding: 8px 18px;
+      font-size: 0.85rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 80px 0 64px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: #1a1a1a;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: #555;
+      max-width: 580px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── Dashboard Preview ── */
+    .dashboard {
+      padding: 48px 0 64px;
+    }
+
+    .dashboard-title {
+      text-align: center;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #888;
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+
+    .dashboard-widget {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-card.red {
+      background: #FCEBEB;
+    }
+
+    .stat-card.amber {
+      background: #FAEEDA;
+    }
+
+    .stat-card.green {
+      background: #EAF3DE;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .stat-card.red .stat-label {
+      color: #A32D2D;
+    }
+
+    .stat-card.amber .stat-label {
+      color: #854F0B;
+    }
+
+    .stat-card.green .stat-label {
+      color: #3B6D11;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+    }
+
+    .stat-card.red .stat-value {
+      color: #A32D2D;
+    }
+
+    .stat-card.amber .stat-value {
+      color: #854F0B;
+    }
+
+    .stat-card.green .stat-value {
+      color: #3B6D11;
+    }
+
+    .stat-unit {
+      font-size: 0.8rem;
+      font-weight: 400;
+    }
+
+    .chart-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 120px;
+      padding-top: 8px;
+    }
+
+    .bar-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .bar {
+      width: 100%;
+      border-radius: 3px 3px 0 0;
+      background: #ddd;
+      min-height: 4px;
+    }
+
+    .bar.purple {
+      background: #534AB7;
+    }
+
+    .bar-time {
+      font-size: 0.65rem;
+      color: #999;
+      margin-top: 6px;
+    }
+
+    /* ── Section Shared ── */
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      font-size: 1.05rem;
+      color: #555;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .section-alt {
+      background: #F9F9F9;
+    }
+
+    /* ── Features ── */
+    .features {
+      padding: 64px 0;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: #EEEDFE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 1.3rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 0.88rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* ── Pricing ── */
+    .pricing {
+      padding: 64px 0;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      padding: 32px 28px;
+      text-align: center;
+    }
+
+    .pricing-card.featured {
+      border: 2px solid #534AB7;
+      position: relative;
+    }
+
+    .pricing-badge {
+      display: none;
+    }
+
+    .pricing-card.featured .pricing-badge {
+      display: inline-block;
+      background: #534AB7;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .pricing-tier {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .pricing-price {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .pricing-price .currency {
+      font-size: 1.2rem;
+      vertical-align: super;
+    }
+
+    .pricing-price .period {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #888;
+    }
+
+    .pricing-desc {
+      font-size: 0.88rem;
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    .pricing-features {
+      text-align: left;
+      margin-bottom: 28px;
+    }
+
+    .pricing-features li {
+      font-size: 0.88rem;
+      color: #444;
+      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pricing-features li::before {
+      content: "\2713";
+      color: #534AB7;
+      font-weight: 700;
+    }
+
+    .pricing-card .btn {
+      width: 100%;
+    }
+
+    /* ── Testimonials ── */
+    .testimonials {
+      padding: 64px 0;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-left: 4px solid #534AB7;
+      border-radius: 0 10px 10px 0;
+      padding: 28px 24px;
+    }
+
+    .testimonial-card blockquote {
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .testimonial-city {
+      font-size: 0.82rem;
+      color: #888;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 32px 0;
+      border-top: 1px solid #e5e5e5;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 0.85rem;
+      color: #777;
+    }
+
+    .footer .brand {
+      color: #534AB7;
+      font-weight: 700;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 1.85rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .bar-chart {
+        height: 80px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        max-width: 360px;
+        margin: 0 auto;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links .btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
+
+      .dashboard-widget {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-  <!-- Theme Toggle Button -->
-  <button class="btn btn-outline-secondary theme-toggle-btn" id="theme-toggle" onclick="toggleTheme()"
-    title="Toggle dark/light mode">
-    🌙
-  </button>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-6 col-md-6 col-sm-8">
-        <div class="border border-dotted border-3 rounded-3 p-3 mb-4 bg-white bg-opacity-50">
-          <h4 class="text-center group-header mb-0">VUNA CALCULATOR</h4>
-          <p class="text-center text-small text-muted">
-            <i>Created by set 2025/26 Software Engineering</i>
-          </p>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card calculator-card">
-              <div class="card-body p-4">
-                <div class="calculator">
-                  <div class="display-container">
-                    <input type="text" class="form-control" id="result" placeholder="0" disabled />
-                  </div>
 
-                  <div class="btn-grid">
-                    <button class="btn btn-light" onclick="bracketToResult('(')">(</button>
-                    <button class="btn btn-light" onclick="bracketToResult(')')">)</button>
-                    <button class="btn btn-light" onclick="backspace()">←</button>
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="container">
+      <a href="/" class="nav-brand"><span class="purple">Noise</span>Log</a>
+      <div class="nav-links">
+        <a href="#" class="nav-login">Log in</a>
+        <a href="#pricing" class="btn btn-primary btn-sm">Try free</a>
+      </div>
+    </div>
+  </nav>
 
-                    <!-- Row trig -->
-                    <button class="btn btn-action" onclick="clearResult()">AC</button>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Document the noise.<br>Win the dispute.</h1>
+      <p>Log decibel levels in real time, build PDF reports with timestamps and evidence, and hold your landlord or neighbor accountable.</p>
+      <div class="hero-buttons">
+        <a href="#pricing" class="btn btn-primary">Start logging free</a>
+        <a href="#features" class="btn btn-outline">See features</a>
+      </div>
+    </div>
+  </section>
 
-                    <!-- Row 2 -->
-                    <button class="btn btn-light" onclick="appendToResult(7)">7</button>
-                    <button class="btn btn-light" onclick="appendToResult(8)">8</button>
-                    <button class="btn btn-light" onclick="appendToResult(9)">9</button>
-
-                    <!-- Row 3 -->
-                    <button class="btn btn-operator" onclick="operatorToResult('/')">÷</button>
-                    <button class="btn btn-light" onclick="appendToResult(4)">4</button>
-                    <button class="btn btn-light" onclick="appendToResult(5)">5</button>
-                    <button class="btn btn-light" onclick="appendToResult(6)">6</button>
-
-                    <!-- Row 4 -->
-                    <button class="btn btn-operator" onclick="operatorToResult('*')">×</button>
-                    <button class="btn btn-light" onclick="appendToResult(1)">1</button>
-                    <button class="btn btn-light" onclick="appendToResult(2)">2</button>
-                    <button class="btn btn-light" onclick="appendToResult(3)">3</button>
-
-                    <!-- Row 5 -->
-                    <button class="btn btn-operator" onclick="operatorToResult('+')">+</button>
-                    <button class="btn btn-light" onclick="appendToResult('.')">.</button>
-                    <button class="btn btn-light" onclick="appendToResult(0)">0</button>
-                    <button class="btn btn-operator" onclick="percentToResult('%')">%</button>
-                    
-                    <!-- Row 9 -->
-                    <button class="btn btn-operator" onclick="operatorToResult('-')">−</button>
-
-                    <button class="btn btn-equals" onclick="calculateResult()" style="grid-column: span 4;">=</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <!-- Dashboard Preview -->
+  <section class="dashboard section-alt">
+    <div class="container">
+      <p class="dashboard-title">Sample dashboard</p>
+      <div class="dashboard-widget">
+        <div class="stats-row">
+          <div class="stat-card red">
+            <div class="stat-label">Peak dB</div>
+            <div class="stat-value">94 <span class="stat-unit">dB</span></div>
           </div>
+          <div class="stat-card amber">
+            <div class="stat-label">Avg Night dB</div>
+            <div class="stat-value">62 <span class="stat-unit">dB</span></div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Quiet Hours</div>
+            <div class="stat-value">14 <span class="stat-unit">logged</span></div>
+          </div>
+        </div>
 
-          <script src="assets/js/bootstrap.min.js"></script>
-          <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-          <script type="module" src="assets/js/script.js"></script>
-          <button id="scroll-to-calculator" title="Back to Calculator">↑</button>
+        <div class="chart-label">Hourly noise levels — Wed 11 Jun</div>
+        <div class="bar-chart">
+          <div class="bar-wrapper">
+            <div class="bar" style="height: 20%;"></div>
+            <span class="bar-time">8p</span>
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar purple" style="height: 55%;"></div>
+            <span class="bar-time">9p</span>
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar purple" style="height: 78%;"></div>
+            <span class="bar-time">10p</span>
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar purple" style="height: 100%;"></div>
+            <span class="bar-time">11p</span>
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar purple" style="height: 92%;"></div>
+            <span class="bar-time">12a</span>
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar purple" style="height: 85%;"></div>
+            <span class="bar-time">1a</span>
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar" style="height: 40%;"></div>
+            <span class="bar-time">2a</span>
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar" style="height: 15%;"></div>
+            <span class="bar-time">3a</span>
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar" style="height: 10%;"></div>
+            <span class="bar-time">4a</span>
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar" style="height: 8%;"></div>
+            <span class="bar-time">5a</span>
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar" style="height: 12%;"></div>
+            <span class="bar-time">6a</span>
+          </div>
+          <div class="bar-wrapper">
+            <div class="bar" style="height: 22%;"></div>
+            <span class="bar-time">7a</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Everything you need to prove it</h2>
+        <p>From first reading to final report, NoiseLog gives you the tools to back up every complaint.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#127908;</div>
+          <h3>Continuous dB logging</h3>
+          <p>Track sound levels in the background with automatic sampling. No need to keep the app open.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128196;</div>
+          <h3>PDF reports</h3>
+          <p>Generate timestamped PDF reports with charts, averages, and peak readings ready to submit.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128276;</div>
+          <h3>Quiet hours alerts</h3>
+          <p>Set your local quiet hours and get notified when noise exceeds your threshold during those times.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128269;</div>
+          <h3>Local ordinance lookup</h3>
+          <p>Auto-detect your area and show the relevant noise ordinances so you know what violations look like.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing section-alt" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <h2>Simple, honest pricing</h2>
+        <p>Start free. Pay once for a single report, or subscribe for unlimited access.</p>
+      </div>
+      <div class="pricing-grid">
+        <!-- Free -->
+        <div class="pricing-card">
+          <div class="pricing-tier">Free</div>
+          <div class="pricing-price"><span class="currency">$</span>0</div>
+          <div class="pricing-desc">Try NoiseLog with no commitment</div>
+          <ul class="pricing-features">
+            <li>dB logging up to 3 sessions</li>
+            <li>Quiet hours alerts</li>
+            <li>Local ordinance lookup</li>
+          </ul>
+          <a href="#" class="btn btn-outline">Get started</a>
+        </div>
+        <!-- Report (featured) -->
+        <div class="pricing-card featured">
+          <div class="pricing-badge">Most popular</div>
+          <div class="pricing-tier">Report</div>
+          <div class="pricing-price"><span class="currency">$</span>4 <span class="period">one-time</span></div>
+          <div class="pricing-desc">One PDF report, no strings attached</div>
+          <ul class="pricing-features">
+            <li>Unlimited dB logging</li>
+            <li>PDF report generation</li>
+            <li>Quiet hours alerts</li>
+            <li>Local ordinance lookup</li>
+          </ul>
+          <a href="#" class="btn btn-primary">Buy a report</a>
+        </div>
+        <!-- Unlimited -->
+        <div class="pricing-card">
+          <div class="pricing-tier">Unlimited</div>
+          <div class="pricing-price"><span class="currency">$</span>9 <span class="period">/mo</span></div>
+          <div class="pricing-desc">For ongoing disputes and repeat use</div>
+          <ul class="pricing-features">
+            <li>Unlimited dB logging</li>
+            <li>Unlimited PDF reports</li>
+            <li>Quiet hours alerts</li>
+            <li>Local ordinance lookup</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#" class="btn btn-outline">Subscribe</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <h2>Trusted by renters</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <blockquote>&ldquo;My upstairs neighbor had loud parties every weekend. I used NoiseLog for two weeks, generated a PDF, and submitted it with my complaint. The noise stopped immediately.&rdquo;</blockquote>
+          <div class="testimonial-author">Keiko T.</div>
+          <div class="testimonial-city">Portland, OR</div>
+        </div>
+        <div class="testimonial-card">
+          <blockquote>&ldquo;My landlord said the noise wasn&rsquo;t that bad. The dB logs and timestamped report proved otherwise. I got my security deposit back in full.&rdquo;</blockquote>
+          <div class="testimonial-author">Marcus D.</div>
+          <div class="testimonial-city">Austin, TX</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p><span class="brand">NoiseLog</span> &middot; Available on iOS and Android &middot; <a href="mailto:support@noiselog.app">support@noiselog.app</a></p>
+    </div>
+  </footer>
+
 </body>
-
 </html>
-
