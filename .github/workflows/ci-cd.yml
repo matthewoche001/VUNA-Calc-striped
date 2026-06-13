@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Validate HTML
-        uses: Cyb3r-Jak3/html-validate-action@v7
+        uses: cyb3r-jak3/html-validate-action@v7
         with:
           file: index.html
 
